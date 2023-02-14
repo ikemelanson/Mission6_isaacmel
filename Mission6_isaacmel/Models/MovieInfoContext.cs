@@ -15,19 +15,9 @@ namespace Mission6_isaacmel.Models
 
         public DbSet<MovieForm> responses { get; set; }
 
+        //seed the database with three movies
         protected override void OnModelCreating(ModelBuilder mb)
         {
-
-        //    public int ApplicationId { get; set; }
-        //public string Category { get; set; }
-        //public string Title { get; set; }
-        //public int Year { get; set; }
-        //public string DirectorFirstName { get; set; }
-        //public string DirectoryLastName { get; set; }
-        //public string Rating { get; set; }
-        //public bool Edited { get; set; }
-        //public string LentTo { get; set; }
-        //public string Notes { get; set; }
         mb.Entity<MovieForm>().HasData(
                 new MovieForm
                 {

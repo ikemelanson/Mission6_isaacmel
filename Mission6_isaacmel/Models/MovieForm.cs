@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-//category string, title string, year number, director string, rating dropdown string, edited bool, lent to string, notes string 25char
 namespace Mission6_isaacmel.Models
+//define the structure of the Movieform database
 {
     public class MovieForm
     {
