@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mission6_isaacmel.Models
-//define the structure of the Movieform database
+//define the structure of Movieform database
 {
     public class MovieForm
     {
