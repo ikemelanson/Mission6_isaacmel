@@ -13,8 +13,6 @@ namespace Mission6_isaacmel.Models
         [Required]
         public int ApplicationId { get; set; }
         [Required]
-        public string Category { get; set; }
-        [Required]
         public string Title { get; set; }
         [Required]
         public int Year { get; set; }
@@ -31,5 +29,9 @@ namespace Mission6_isaacmel.Models
         public string Notes { get; set; }
 
 
+        //Build Foregin key relationship
+        [Required]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

@@ -15,15 +15,70 @@ namespace Mission6_isaacmel.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Mission6_isaacmel.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            CategoryName = "Horrow/Suspense"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            CategoryName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            CategoryName = "Television"
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            CategoryName = "VHS"
+                        });
+                });
+
             modelBuilder.Entity("Mission6_isaacmel.Models.MovieForm", b =>
                 {
                     b.Property<int>("ApplicationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("DirectorFirstName")
                         .IsRequired()
@@ -56,13 +111,15 @@ namespace Mission6_isaacmel.Migrations
 
                     b.HasKey("ApplicationId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             ApplicationId = 1,
-                            Category = "Action/Adventure",
+                            CategoryId = 1,
                             DirectorFirstName = "Gary",
                             DirectoryLastName = "Gray",
                             Edited = false,
@@ -73,7 +130,7 @@ namespace Mission6_isaacmel.Migrations
                         new
                         {
                             ApplicationId = 2,
-                            Category = "Action/Adventure",
+                            CategoryId = 1,
                             DirectorFirstName = "Christopher",
                             DirectoryLastName = "Nolan",
                             Edited = false,
@@ -84,7 +141,7 @@ namespace Mission6_isaacmel.Migrations
                         new
                         {
                             ApplicationId = 3,
-                            Category = "Action/Adventure",
+                            CategoryId = 1,
                             DirectorFirstName = "Andrew",
                             DirectoryLastName = "Davis",
                             Edited = false,
@@ -92,6 +149,15 @@ namespace Mission6_isaacmel.Migrations
                             Title = "The Fugitive",
                             Year = 1993
                         });
+                });
+
+            modelBuilder.Entity("Mission6_isaacmel.Models.MovieForm", b =>
+                {
+                    b.HasOne("Mission6_isaacmel.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

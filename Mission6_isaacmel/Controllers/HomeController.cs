@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission6_isaacmel.Models;
 using System;
@@ -11,13 +12,11 @@ namespace Mission6_isaacmel.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private MovieInfoContext blahContext { get; set; }
+        private MovieInfoContext daContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, MovieInfoContext x)
+        public HomeController(MovieInfoContext x)
         {
-            _logger = logger;
-            blahContext = x;
+            daContext = x;
         }
 
         public IActionResult Index()
@@ -30,7 +29,9 @@ namespace Mission6_isaacmel.Controllers
         [HttpGet]
         public IActionResult MovieForm()
         {
-            return View("movieForm");
+            ViewBag.Categories = daContext.Categories.ToList();
+
+            return View("movieForm", new MovieForm());
         }
 
 
@@ -38,24 +39,76 @@ namespace Mission6_isaacmel.Controllers
         [HttpPost]
         public IActionResult MovieForm(MovieForm response)
         {
-            blahContext.Add(response);
-            blahContext.SaveChanges();
-            //return View("Conformation");
-            return View("movieForm");
+            if (ModelState.IsValid)
+            {
+                daContext.Add(response);
+                daContext.SaveChanges();
+                //return View("Conformation");
+                return RedirectToAction("MovieList");
+
+            }
+            else
+            {
+                ViewBag.Categories = daContext.Categories.ToList();
+                return View(response);
+            }
+
 
             //I wasnt sure if I should return them back to the form if there are errors are not, so right now it does.
             //however there is alos a confermation page available
         }
 
-        public IActionResult podcasts()
+        [HttpGet]
+        public IActionResult MovieList()
         {
-            return View();
+            var applications = daContext.responses
+                .Include(x => x.Category)
+                .ToList();
+
+            return View(applications);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewBag.Categories = daContext.Categories.ToList();
+
+            var movie = daContext.responses.Single(x => x.ApplicationId == id);
+
+            return View("MovieForm", movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(MovieForm response)
+        {
+            if (ModelState.IsValid)
+            {
+                daContext.Update(response);
+                daContext.SaveChanges();
+            }
+            else
+            {
+                ViewBag.Categories = daContext.Categories.ToList();
+                return View("MovieForm", response);
+            }
+
+            return RedirectToAction("MovieList");
+        }
+
+        [HttpGet]
+        public IActionResult Delete( int id)
+        {
+            var movie = daContext.responses.Single(x => x.ApplicationId == id);
+            return View(movie);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(MovieForm response)
+        {
+            daContext.responses.Remove(response);
+            daContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
         }
     }
 }

@@ -7,8 +7,14 @@
 <div>
     <!-- form to add new movie to the dadtabase-->
     <form method="post">
-        <label asp-for="Category">Category:</label>
-        <input asp-for="Category" type="text" /><br />
+        <label asp-for="CategoryId">Category:</label>
+        <select asp-for="CategoryId">
+            <option value="">Select</option>
+            @foreach (Category option in ViewBag.Categories)
+            {
+                <option value="@option.CategoryId">@option.CategoryName</option>
+            }
+        </select><br />
 
         <label asp-for="Title">Movie Title:</label>
         <input asp-for="Title" type="text" /><br />
@@ -31,10 +37,10 @@
         </select><br />
 
         <label asp-for="Edited">Edited:</label>
-        <label for="true">True</label>
-            <input type="radio" id="true" value="true"/>
-        <label for="false">False</label>
-            <input type="radio" id="false" value="false" /><br />
+        <label for="true" asp-for="Edited">True</label>
+            <input type="radio" id="true" value="true" asp-for="Edited"/>
+        <label for="false" asp-for="Edited">False</label>
+            <input type="radio" id="false" value="false" asp-for="Edited" /><br />
 
         <label asp-for="LentTo">Lent To</label>
         <input asp-for="LentTo" type="text" /><br />
@@ -42,6 +48,7 @@
         <label asp-for="Notes">Notes:</label>
         <input asp-for="Notes" type="text" />
 
+        <input asp-for="ApplicationId" type="hidden" />
         <button type="submit">Submit</button>
 
         <div asp-validation-summary="All"></div>
