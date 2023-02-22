@@ -3,6 +3,8 @@
 }
 @model List<MovieForm>
 
+
+<!--movie database display table-->
 <table class="table table-bordered table-striped">
     <thead class="font-weight-bold">
         <tr>
@@ -18,6 +20,7 @@
         </tr>
     </thead>
     <tbody>
+        <!--create a row for every movie in the database-->
         @foreach (var movie in Model)
             {
         <tr>

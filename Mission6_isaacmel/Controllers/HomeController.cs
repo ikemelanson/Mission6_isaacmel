@@ -68,6 +68,7 @@ namespace Mission6_isaacmel.Controllers
             return View(applications);
         }
 
+        //get the edit movie page
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -78,6 +79,7 @@ namespace Mission6_isaacmel.Controllers
             return View("MovieForm", movie);
         }
 
+        //submit edits to a movie
         [HttpPost]
         public IActionResult Edit(MovieForm response)
         {
@@ -95,6 +97,7 @@ namespace Mission6_isaacmel.Controllers
             return RedirectToAction("MovieList");
         }
 
+        //get the delete page for a movie
         [HttpGet]
         public IActionResult Delete( int id)
         {
@@ -102,6 +105,7 @@ namespace Mission6_isaacmel.Controllers
             return View(movie);
         }
 
+        //submit a delete for a movie
         [HttpPost]
         public IActionResult Delete(MovieForm response)
         {
